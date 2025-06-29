@@ -30,12 +30,12 @@ const PlaceOrder = () => {
 
     const initPay = (order) => {
         const options = {
-            key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+            key: import.meta.env.VITE_RAZORPAY_KEYid,
             amount: order.amount,
             currency: order.currency,
             name:'Order Payment',
             description:'Order Payment',
-            order_id: order.id,
+            orderid: order.id,
             receipt: order.receipt,
             handler: async (response) => {
                 console.log(response)
@@ -65,7 +65,7 @@ const PlaceOrder = () => {
             for (const items in cartItems) {
                 for (const item in cartItems[items]) {
                     if (cartItems[items][item] > 0) {
-                        const itemInfo = structuredClone(products.find(product => product._id === items))
+                        const itemInfo = structuredClone(products.find(product => product.id === items))
                         if (itemInfo) {
                             itemInfo.size = item
                             itemInfo.quantity = cartItems[items][item]

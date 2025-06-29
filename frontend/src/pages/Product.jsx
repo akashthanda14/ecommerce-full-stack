@@ -14,6 +14,7 @@ const Product = () => {
 
  const fetchProductData = async () => {
   const product = products.find((item) => item.id === Number(productId));
+  console.log(productId)
   if (product) {
     setProductData(product);
     setImage(product.image?.[0] || '');
