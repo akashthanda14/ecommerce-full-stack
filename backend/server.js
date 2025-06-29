@@ -12,6 +12,7 @@ import adminRouter from './routes/adminRoute.js';
 const app = express();
 const port = process.env.PORT || 4000;
 
+
 connectCloudinary(); // ✅ If still using Cloudinary
 
 app.use(express.json());
