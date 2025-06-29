@@ -2,8 +2,8 @@ import express from 'express';
 import {
   placeOrder,
   createStripeSession,
-  createRazorpayOrder,
-  verifyRazorpayPayment,
+  // createRazorpayOrder,
+  // verifyRazorpayPayment,
   getAllOrderList,
   getUserOrderList,
   updateOrderStatus,
@@ -16,9 +16,9 @@ const orderRouter = express.Router();
 
 // User routes
 orderRouter.post('/place', authUser, placeOrder);
-orderRouter.post('/stripe', authUser, createStripeSession);
-orderRouter.post('/razorpay', authUser, createRazorpayOrder);
-orderRouter.post('/verify', authUser, verifyRazorpayPayment);
+// orderRouter.post('/stripe', authUser, createStripeSession);
+// orderRouter.post('/razorpay', authUser, createRazorpayOrder);
+// orderRouter.post('/verify', authUser, verifyRazorpayPayment);
 orderRouter.post('/user', authUser, getUserOrderList);
 
 // Admin routes
