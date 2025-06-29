@@ -27,6 +27,8 @@ app.use('/api/order', orderRouter);
 
 app.get('/', (req, res) => {
   res.send('API Working');
+  console.log('DATABASE_URL at runtime:', process.env.DATABASE_URL);
+
 });
 
 app.listen(port, () => console.log(`🚀 Server started on PORT: ${port}`));
