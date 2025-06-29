@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   placeOrder,
-  createStripeSession,
+  // createStripeSession,
   // createRazorpayOrder,
   // verifyRazorpayPayment,
   getAllOrderList,
