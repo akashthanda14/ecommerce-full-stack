@@ -1,4 +1,6 @@
 import prisma from '../lib/prisma.js';
+import { serializeBigInts } from '../utils/serializeBigInt.js';
+
 
 export const addToCartService = async ({ userId, itemId, size }) => {
   // check if cart item exists
@@ -37,8 +39,10 @@ export const updateCartService = async ({ userId, itemId, size, quantity }) => {
 };
 
 export const getCartService = async (userId) => {
-  return await prisma.cartItem.findMany({
+  const rawData = await prisma.cartItem.findMany({
     where: { userId },
     include: { product: true }
   });
+  
+  return serializeBigInts(rawData);
 };

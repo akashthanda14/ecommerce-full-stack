@@ -27,7 +27,6 @@ const updateCart = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 const getUserCart = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -38,5 +37,7 @@ const getUserCart = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+export default getUserCart;
+
 
 export { addToCart, updateCart, getUserCart };

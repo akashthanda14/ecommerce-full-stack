@@ -1,115 +1,115 @@
-###
-# ✅ Register User
-POST http://localhost:4000/api/user/register
-Content-Type: application/json
+# ###
+# # ✅ Register User
+# POST http://localhost:4000/api/user/register
+# Content-Type: application/json
 
-{
-  "name": "Test User",
-  "email": "testuser@example.com",
-  "password": "strongpass123"
-}
+# {
+#   "name": "Test User",
+#   "email": "testuser@example.com",
+#   "password": "strongpass123"
+# }
 
-###
-# ✅ Login User
-POST http://localhost:4000/api/user/login
-Content-Type: application/json
+# ###
+# # ✅ Login User
+# POST http://localhost:4000/api/user/login
+# Content-Type: application/json
 
-{
-  "email": "testuser@example.com",
-  "password": "strongpass123"
-}
+# {
+#   "email": "testuser@example.com",
+#   "password": "strongpass123"
+# }
 
-###
-# ✅ Admin Login
-POST http://localhost:4000/api/admin/login
-Content-Type: application/json
+# ###
+# # ✅ Admin Login
+# POST http://localhost:4000/api/admin/login
+# Content-Type: application/json
 
-{
-  "email": "admin@example.com",
-  "password": "greatstack123"
-}
+# {
+#   "email": "admin@example.com",
+#   "password": "greatstack123"
+# }
 
 
-###
-# 🚫 Protected User Route (Requires token)
-POST http://localhost:4000/api/order
-Content-Type: application/json
-token: {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUwNDg5OTQ1LCJleHAiOjE3NTEwOTQ3NDV9.vBLqa3WmYoh6JPbceZ7T2fdZjOvhXsGhdA3tVDji-8g"}}
+# ###
+# # 🚫 Protected User Route (Requires token)
+# POST http://localhost:4000/api/order
+# Content-Type: application/json
+# token: {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUwNDg5OTQ1LCJleHAiOjE3NTEwOTQ3NDV9.vBLqa3WmYoh6JPbceZ7T2fdZjOvhXsGhdA3tVDji-8g"}}
 
-{
-  "items": ["Product A", "Product B"],
-  "amount": 999,
-  "address": { "line1": "123 Street", "city": "City", "zip": "123456" },
-  "paymentMethod": "Cash on Delivery"
-}
+# {
+#   "items": ["Product A", "Product B"],
+#   "amount": 999,
+#   "address": { "line1": "123 Street", "city": "City", "zip": "123456" },
+#   "paymentMethod": "Cash on Delivery"
+# }
 
-###
-# 🚫 Protected Admin Route (Requires token)
-GET http://localhost:4000/api/admin/all-users
-token: {{"eyJhbGciOiJIUzI1NiJ9.YWRtaW5AZXhhbXBsZS5jb21ncmVhdHN0YWNrMTIz.4OrQphsHNe6B8_uPr78EUPXtWPxJ9jQoP8nsPD9TgNA"}}
+# ###
+# # 🚫 Protected Admin Route (Requires token)
+# GET http://localhost:4000/api/admin/all-users
+# token: {{"eyJhbGciOiJIUzI1NiJ9.YWRtaW5AZXhhbXBsZS5jb21ncmVhdHN0YWNrMTIz.4OrQphsHNe6B8_uPr78EUPXtWPxJ9jQoP8nsPD9TgNA"}}
 
-###
+# ###
 
-###
-# ✅ List All Products
-GET http://localhost:4000/api/product/list
+# ###
+# # ✅ List All Products
+# GET http://localhost:4000/api/product/list
 
-###
-# ✅ Get Single Product (replace PRODUCT_ID)
-POST http://localhost:4000/api/product/single
-Content-Type: application/json
+# ###
+# # ✅ Get Single Product (replace PRODUCT_ID)
+# POST http://localhost:4000/api/product/single
+# Content-Type: application/json
 
-{
-  "productId": 1
-}
+# {
+#   "productId": 1
+# }
 
-###
-# ✅ Add New Product (ADMIN ONLY — Requires Token)
-# 📌 Replace {{ADMIN_TOKEN}} with real admin tokenPOST http://localhost:4000/api/product/add
-Content-Type: multipart/form-data; boundary=----MyCustomBoundary
-token: your_admin_token_here
+# ###
+# # ✅ Add New Product (ADMIN ONLY — Requires Token)
+# # 📌 Replace {{ADMIN_TOKEN}} with real admin tokenPOST http://localhost:4000/api/product/add
+# Content-Type: multipart/form-data; boundary=----MyCustomBoundary
+# token: your_admin_token_here
 
-------MyCustomBoundary
-Content-Disposition: form-data; name="name"
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="name"
 
-Test Product
-------MyCustomBoundary
-Content-Disposition: form-data; name="description"
+# Test Product
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="description"
 
-Awesome description
-------MyCustomBoundary
-Content-Disposition: form-data; name="price"
+# Awesome description
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="price"
 
-999
-------MyCustomBoundary
-Content-Disposition: form-data; name="category"
+# 999
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="category"
 
-Men
-------MyCustomBoundary
-Content-Disposition: form-data; name="subCategory"
+# Men
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="subCategory"
 
-Shirts
-------MyCustomBoundary
-Content-Disposition: form-data; name="sizes"
+# Shirts
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="sizes"
 
-["S","M","L"]
-------MyCustomBoundary
-Content-Disposition: form-data; name="bestseller"
+# ["S","M","L"]
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="bestseller"
 
-true
-------MyCustomBoundary
-Content-Disposition: form-data; name="image1"; filename="sample.jpg"
-Content-Type: image/jpeg
+# true
+# ------MyCustomBoundary
+# Content-Disposition: form-data; name="image1"; filename="sample.jpg"
+# Content-Type: image/jpeg
 
-< ./test-images/sample.jpg
-------MyCustomBoundary--
+# < ./test-images/sample.jpg
+# ------MyCustomBoundary--
 
-###
-# ✅ Remove Product (ADMIN ONLY — Requires Token)
-POST http://localhost:4000/api/product/remove
-Content-Type: application/json
-token: {{ADMIN_TOKEN}}
+# ###
+# # ✅ Remove Product (ADMIN ONLY — Requires Token)
+# POST http://localhost:4000/api/product/remove
+# Content-Type: application/json
+# token: {{ADMIN_TOKEN}}
 
-{
-  "id": 1
-}
+# {
+#   "id": 1
+# }
