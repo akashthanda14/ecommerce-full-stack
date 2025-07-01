@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import swaggerUi from 'swagger-ui-express';
+import fs from 'fs';
+import yaml from 'yaml';
 
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
@@ -11,6 +14,9 @@ import adminRouter from './routes/adminRoute.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
+
+const file = fs.readFileSync('./swagger.yaml', 'utf8');
+const swaggerDocument = yaml.parse(file);
 
 
 connectCloudinary(); // ✅ If still using Cloudinary
@@ -24,6 +30,7 @@ app.use('/api/admin',adminRouter);
 app.use('/api/product', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/order', orderRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
   res.send('API Working');
