@@ -1,56 +1,77 @@
-import prisma from '../lib/prisma.js';
+import  prisma  from '../lib/prisma.js'
+import { serializeBigInts } from '../utils/serializeBigInt.js';
 
-export const createOrder = async (data) => {
+
+
+export const createOrder = async (orderData) => {
   return await prisma.order.create({
-    data,
-    include: { items: true },
-  });
-};
-
-export const updateOrder = async (orderId, updateData) => {
-  return await prisma.order.update({
-    where: { id: Number(orderId) },
-    data: updateData,
-  });
-};
-
-export const getAllOrders = async () => {
-  return await prisma.order.findMany({
-    include: {
-      user: true,
+    data: {
+      user: {
+        connect: { id: orderData.userId }
+      },
+      amount: orderData.amount,
+      address: orderData.address,
+      paymentMethod: 'COD',
+      payment: false,
+      status: 'Order Placed',
+      date: Date.now(),
       items: {
-        include: {
-          product: true,
-        },
+        create: orderData.items.map(item => ({
+          product: {
+            connect: { id: item.productId }
+          },
+          quantity: item.quantity,
+          size: item.size ?? "Default",
+          user: {
+            connect: { id: orderData.userId }
+          }
+        })),
       },
     },
-    orderBy: {
-      date: 'desc',
-    },
-  });
-};
-
-export const getUserOrders = async (userId) => {
-  return await prisma.order.findMany({
-    where: { userId: Number(userId) },
-    include: {
-      items: {
-        include: {
-          product: true,
-        },
-      },
-    },
-    orderBy: {
-      date: 'desc',
-    },
-  });
-};
-
-export const getOrderByReceiptId = async (orderId) => {
-  return await prisma.order.findUnique({
-    where: { id: Number(orderId) },
     include: {
       items: true,
     },
+  });
+};
+
+
+
+
+
+/**
+ * Get all orders (admin)
+ */
+
+export const getAllOrders = async () => {
+  const orders = await prisma.order.findMany({
+    include: {
+      items: true,
+      user: true,
+    },
+    orderBy: { date: 'desc' },
+  });
+
+  return serializeBigInts(orders);
+};
+
+
+/**
+ * Get user-specific orders
+ */
+export const getUserOrders = async (userId) => {
+  return await prisma.order.findMany({
+    where: { userId },
+    include: { items: true },
+    orderBy: { date: 'desc' },
+  });
+};
+
+/**
+ * Update order status (admin)
+ */
+export const updateOrderStatus = async (orderId, status) => {
+  return await prisma.order.update({
+    where: { id: Number(orderId) },
+    data: { status },
   });
 };

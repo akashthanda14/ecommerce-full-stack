@@ -1,79 +1,76 @@
 import {
   createOrder,
-  updateOrder,
   getAllOrders,
   getUserOrders,
+  updateOrderStatus
 } from '../services/orderService.js';
 
 /**
- * ✅ Place Order (COD or Prepaid marker)
+ * ✅ Place COD Order
  */
 export const placeOrder = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { items, amount, address, paymentMethod } = req.body;
+    const { items, amount, address } = req.body;
 
     const order = await createOrder({
       userId: Number(userId),
       amount: parseFloat(amount),
       address,
-      paymentMethod,
-      payment: paymentMethod === 'COD' ? false : true,
-      status: 'Order Placed',
-      date: Date.now(),
-      items: {
-        create: items.map((item) => ({
-          productId: Number(item.productId),
-          quantity: item.quantity,
-          size: item.size,
-        })),
-      },
+      items,
     });
 
-    res.json({ success: true, message: 'Order placed', orderId: order.id });
+    res.json({ success: true, message: 'Order Placed', orderId: order.id });
   } catch (error) {
-    console.error(error);
+    console.error('Place Order Error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
 /**
- * ✅ Admin: Get all orders
+ * ✅ Get All Orders (Admin)
  */
-export const getAllOrderList = async (req, res) => {
+export const allOrders = async (req, res) => {
   try {
     const orders = await getAllOrders();
     res.json({ success: true, orders });
   } catch (error) {
-    console.error(error);
+    console.error('Get All Orders Error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
 /**
- * ✅ User: Get their orders
+ * ✅ Get User Orders
  */
-export const getUserOrderList = async (req, res) => {
+export const userOrders = async (req, res) => {
   try {
     const userId = req.user.id;
-    const orders = await getUserOrders(userId);
-    res.json({ success: true, orders });
+    const orders = await getUserOrders(Number(userId));
+
+    // Fix BigInt serialization
+    const cleanedOrders = orders.map(order => ({
+      ...order,
+      date: Number(order.date),
+    }));
+
+    res.json({ success: true, orders: cleanedOrders });
   } catch (error) {
-    console.error(error);
+    console.error('Get User Orders Error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
 /**
- * ✅ Admin: Update order status
+ * ✅ Update Order Status (Admin)
  */
-export const updateOrderStatus = async (req, res) => {
+export const updateStatus = async (req, res) => {
   try {
     const { orderId, status } = req.body;
-    await updateOrder(orderId, { status });
+    await updateOrderStatus(orderId, status);
     res.json({ success: true, message: 'Order status updated' });
   } catch (error) {
-    console.error(error);
+    console.error('Update Order Status Error:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };

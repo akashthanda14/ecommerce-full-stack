@@ -1,23 +1,22 @@
+// orderRoutes.js
 import express from 'express';
 import {
   placeOrder,
-  getAllOrderList,
-  getUserOrderList,
-  updateOrderStatus,
+  allOrders,
+  userOrders,
+  updateStatus
 } from '../controllers/orderController.js';
-
-
 import authUser from '../middleware/auth.js';
 import adminAuth from '../middleware/adminAuth.js';
 
 const orderRouter = express.Router();
 
-// User routes
+// User Routes
 orderRouter.post('/place', authUser, placeOrder);
-orderRouter.post('/user', authUser, getUserOrderList);
+orderRouter.post('/userorders', authUser, userOrders);
 
-// Admin routes
-orderRouter.get('/admin', adminAuth, getAllOrderList);
-orderRouter.post('/admin/update', adminAuth, updateOrderStatus);
+// Admin Routes
+orderRouter.post('/list', adminAuth, allOrders);
+orderRouter.post('/status', adminAuth, updateStatus);
 
 export default orderRouter;

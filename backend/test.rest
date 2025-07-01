@@ -1,115 +1,120 @@
-# ###
-# # ✅ Register User
-# POST http://localhost:4000/api/user/register
-# Content-Type: application/json
+##Below is the Test Cases for the SIGN IN SIGN UP
 
-# {
-#   "name": "Test User",
-#   "email": "testuser@example.com",
-#   "password": "strongpass123"
-# }
+### Sign Up (Register)
+POST http://localhost:4000/api/user/register
+Content-Type: application/json
 
-# ###
-# # ✅ Login User
-# POST http://localhost:4000/api/user/login
-# Content-Type: application/json
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "securePassword123"
+}
 
-# {
-#   "email": "testuser@example.com",
-#   "password": "strongpass123"
-# }
+### Sign In (Login)
+POST http://localhost:4000/api/user/login
+Content-Type: application/json
 
-# ###
-# # ✅ Admin Login
-# POST http://localhost:4000/api/admin/login
-# Content-Type: application/json
-
-# {
-#   "email": "admin@example.com",
-#   "password": "greatstack123"
-# }
+{
+  "email": "johndoe@example.com",
+  "password": "securePassword123"
+}
 
 
-# ###
-# # 🚫 Protected User Route (Requires token)
-# POST http://localhost:4000/api/order
-# Content-Type: application/json
-# token: {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUwNDg5OTQ1LCJleHAiOjE3NTEwOTQ3NDV9.vBLqa3WmYoh6JPbceZ7T2fdZjOvhXsGhdA3tVDji-8g"}}
 
-# {
-#   "items": ["Product A", "Product B"],
-#   "amount": 999,
-#   "address": { "line1": "123 Street", "city": "City", "zip": "123456" },
-#   "paymentMethod": "Cash on Delivery"
-# }
+### Set global token variable (edit YOUR_JWT_TOKEN below)
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUxMjcxOTA3LCJleHAiOjE3NTE4NzY3MDd9.fWN-mnwVA8HXd8fsYy2EZDmCP0kiB40Y4IfScL6MzXM
 
-# ###
-# # 🚫 Protected Admin Route (Requires token)
-# GET http://localhost:4000/api/admin/all-users
-# token: {{"eyJhbGciOiJIUzI1NiJ9.YWRtaW5AZXhhbXBsZS5jb21ncmVhdHN0YWNrMTIz.4OrQphsHNe6B8_uPr78EUPXtWPxJ9jQoP8nsPD9TgNA"}}
+@baseUrl = http://localhost:4000/api/cart
 
-# ###
+### ✅ Get User Cart
+GET {{baseUrl}}/get
+Authorization: Bearer {{token}}
 
-# ###
-# # ✅ List All Products
-# GET http://localhost:4000/api/product/list
+###
 
-# ###
-# # ✅ Get Single Product (replace PRODUCT_ID)
-# POST http://localhost:4000/api/product/single
-# Content-Type: application/json
+### ✅ Add to Cart
+POST {{baseUrl}}/add
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
-# {
-#   "productId": 1
-# }
+{
+  "itemId": 1,
+  "size": "M"
+}
 
-# ###
-# # ✅ Add New Product (ADMIN ONLY — Requires Token)
-# # 📌 Replace {{ADMIN_TOKEN}} with real admin tokenPOST http://localhost:4000/api/product/add
-# Content-Type: multipart/form-data; boundary=----MyCustomBoundary
-# token: your_admin_token_here
+###
 
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="name"
+### ✅ Update Cart
+POST {{baseUrl}}/update
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
-# Test Product
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="description"
+{
+  "itemId": 1,
+  "size": "M",
+  "quantity": 3
+}
 
-# Awesome description
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="price"
 
-# 999
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="category"
+###Below is the test cases for Placing Order
 
-# Men
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="subCategory"
+/api/order/place         (user, needs auth header)
+/api/order/userorders    (user, needs auth header)
+/api/order/list          (admin, needs admin auth header)
+/api/order/status        (admin, needs admin auth header)
 
-# Shirts
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="sizes"
+### Place Order (User)
+POST http://localhost:4000/api/order/place
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUxMjcxOTA3LCJleHAiOjE3NTE4NzY3MDd9.fWN-mnwVA8HXd8fsYy2EZDmCP0kiB40Y4IfScL6MzXM
 
-# ["S","M","L"]
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="bestseller"
 
-# true
-# ------MyCustomBoundary
-# Content-Disposition: form-data; name="image1"; filename="sample.jpg"
-# Content-Type: image/jpeg
+{
+  "items": [
+    { "productId": 1, "quantity": 2, "size": "M" },
+    { "productId": 2, "quantity": 1, "size": "L" }
+  ],
+  "amount": 450.5,
+  "address": {
+    "street": "123 Main Street",
+    "city": "City",
+    "country": "Country"
+  }
+}
 
-# < ./test-images/sample.jpg
-# ------MyCustomBoundary--
 
-# ###
-# # ✅ Remove Product (ADMIN ONLY — Requires Token)
-# POST http://localhost:4000/api/product/remove
-# Content-Type: application/json
-# token: {{ADMIN_TOKEN}}
+### Get User Orders
+POST http://localhost:4000/api/order/userorders
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzUxMjcxOTA3LCJleHAiOjE3NTE4NzY3MDd9.fWN-mnwVA8HXd8fsYy2EZDmCP0kiB40Y4IfScL6MzXM
 
-# {
-#   "id": 1
-# }
+
+### Sign in as Admin
+
+POST http://localhost:4000/api/admin/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "greatstack123"
+}
+
+
+
+
+### Get All Orders (Admin)
+POST http://localhost:4000/api/order/list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMzQ5NTk4LCJleHAiOjE3NTE5NTQzOTh9.jza-tLtOpnIXMviDTaNK1iW8ayH_75uKE82k6jInXWM
+
+
+### Update Order Status (Admin)
+POST http://localhost:4000/api/order/status
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMzQ5NTk4LCJleHAiOjE3NTE5NTQzOTh9.jza-tLtOpnIXMviDTaNK1iW8ayH_75uKE82k6jInXWM
+
+{
+  "orderId": 2,
+  "status": "Delivered"
+}
+
