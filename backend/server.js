@@ -23,7 +23,7 @@ connectCloudinary(); // ✅ If still using Cloudinary
 
 app.use(express.json());
 app.use(cors({
-  origin: 'https://famefash-frontend-git-dev-doeazes-projects.vercel.app',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
