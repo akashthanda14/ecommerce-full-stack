@@ -5,9 +5,9 @@ POST http://localhost:4000/api/user/register
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "securePassword123"
+  "name": "John Doe 2",
+  "email": "johndoe2@example.com",
+  "password": "securePassword1234"
 }
 
 ### Sign In (Login)
