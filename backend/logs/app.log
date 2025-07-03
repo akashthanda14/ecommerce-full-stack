@@ -40,3 +40,8 @@
 2025-07-03T05:54:36.479Z [INFO]: POST /api/user/login
 2025-07-03T05:54:36.483Z [INFO]: ::ffff:127.0.0.1 - - [03/Jul/2025:05:54:36 +0000] "POST /api/user/login HTTP/1.1" 500 1273 "-" "vscode-restclient"
 2025-07-03T06:10:50.585Z [INFO]: 🚀 Server started on PORT: 4000
+2025-07-03T06:22:04.785Z [INFO]: 🚀 Server started on PORT: 4000
+2025-07-03T06:23:45.263Z [INFO]: GET /
+2025-07-03T06:23:45.277Z [INFO]: ::1 - - [03/Jul/2025:06:23:45 +0000] "GET / HTTP/1.1" 500 1273 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+2025-07-03T06:24:29.219Z [INFO]: 🚀 Server started on PORT: 4000
+2025-07-03T06:24:32.800Z [INFO]: ::1 - - [03/Jul/2025:06:24:32 +0000] "GET / HTTP/1.1" 200 11 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"

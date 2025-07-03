@@ -71,10 +71,10 @@ app.use(morgan('combined', {
 }));
 
 // Log every request with Winston
-app.use((req,next) => {
-  logger.info(`${req.method} ${req.url}`);
-  next();
-});
+// app.use((req,next) => {
+//   logger.info(`${req.method} ${req.url}`);
+//   next();
+// });
 /**
  * ================================
  * Error Testing Route
